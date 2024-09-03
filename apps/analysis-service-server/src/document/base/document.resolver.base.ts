@@ -112,4 +112,12 @@ export class DocumentResolverBase {
 
     return results;
   }
+
+  @graphql.Query(() => Document)
+  async GetDocumentById(
+    @graphql.Args("args")
+    args: string
+  ): Promise<Document> {
+    return this.service.GetDocumentById(args);
+  }
 }

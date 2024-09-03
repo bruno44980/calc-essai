@@ -17,7 +17,6 @@ import { Analysis } from "./Analysis";
 import { AnalysisCountArgs } from "./AnalysisCountArgs";
 import { AnalysisFindManyArgs } from "./AnalysisFindManyArgs";
 import { AnalysisFindUniqueArgs } from "./AnalysisFindUniqueArgs";
-import { CreateAnalysisArgs } from "./CreateAnalysisArgs";
 import { UpdateAnalysisArgs } from "./UpdateAnalysisArgs";
 import { DeleteAnalysisArgs } from "./DeleteAnalysisArgs";
 import { Document } from "../../document/base/Document";
@@ -51,24 +50,6 @@ export class AnalysisResolverBase {
       return null;
     }
     return result;
-  }
-
-  @graphql.Mutation(() => Analysis)
-  async createAnalysis(
-    @graphql.Args() args: CreateAnalysisArgs
-  ): Promise<Analysis> {
-    return await this.service.createAnalysis({
-      ...args,
-      data: {
-        ...args.data,
-
-        document: args.data.document
-          ? {
-              connect: args.data.document,
-            }
-          : undefined,
-      },
-    });
   }
 
   @graphql.Mutation(() => Analysis)

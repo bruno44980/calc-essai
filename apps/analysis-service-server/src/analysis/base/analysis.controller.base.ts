@@ -17,45 +17,13 @@ import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { AnalysisService } from "../analysis.service";
-import { AnalysisCreateInput } from "./AnalysisCreateInput";
-import { Analysis } from "./Analysis";
 import { AnalysisFindManyArgs } from "./AnalysisFindManyArgs";
+import { Analysis } from "./Analysis";
 import { AnalysisWhereUniqueInput } from "./AnalysisWhereUniqueInput";
 import { AnalysisUpdateInput } from "./AnalysisUpdateInput";
 
 export class AnalysisControllerBase {
   constructor(protected readonly service: AnalysisService) {}
-  @common.Post()
-  @swagger.ApiCreatedResponse({ type: Analysis })
-  async createAnalysis(
-    @common.Body() data: AnalysisCreateInput
-  ): Promise<Analysis> {
-    return await this.service.createAnalysis({
-      data: {
-        ...data,
-
-        document: data.document
-          ? {
-              connect: data.document,
-            }
-          : undefined,
-      },
-      select: {
-        analysisType: true,
-        createdAt: true,
-
-        document: {
-          select: {
-            id: true,
-          },
-        },
-
-        id: true,
-        result: true,
-        updatedAt: true,
-      },
-    });
-  }
 
   @common.Get()
   @swagger.ApiOkResponse({ type: [Analysis] })

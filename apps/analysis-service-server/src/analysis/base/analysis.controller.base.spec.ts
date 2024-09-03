@@ -45,10 +45,8 @@ const FIND_ONE_RESULT = {
 };
 
 const service = {
-  createAnalysis() {
-    return CREATE_RESULT;
-  },
   analyses: () => FIND_MANY_RESULT,
+
   analysis: ({ where }: { where: { id: string } }) => {
     switch (where.id) {
       case existingId:
@@ -119,18 +117,6 @@ describe("Analysis", () => {
     await app.init();
   });
 
-  test("POST /analyses", async () => {
-    await request(app.getHttpServer())
-      .post("/analyses")
-      .send(CREATE_INPUT)
-      .expect(HttpStatus.CREATED)
-      .expect({
-        ...CREATE_RESULT,
-        createdAt: CREATE_RESULT.createdAt.toISOString(),
-        updatedAt: CREATE_RESULT.updatedAt.toISOString(),
-      });
-  });
-
   test("GET /analyses", async () => {
     await request(app.getHttpServer())
       .get("/analyses")
@@ -163,28 +149,6 @@ describe("Analysis", () => {
         ...FIND_ONE_RESULT,
         createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
         updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
-      });
-  });
-
-  test("POST /analyses existing resource", async () => {
-    const agent = request(app.getHttpServer());
-    await agent
-      .post("/analyses")
-      .send(CREATE_INPUT)
-      .expect(HttpStatus.CREATED)
-      .expect({
-        ...CREATE_RESULT,
-        createdAt: CREATE_RESULT.createdAt.toISOString(),
-        updatedAt: CREATE_RESULT.updatedAt.toISOString(),
-      })
-      .then(function () {
-        agent
-          .post("/analyses")
-          .send(CREATE_INPUT)
-          .expect(HttpStatus.CONFLICT)
-          .expect({
-            statusCode: HttpStatus.CONFLICT,
-          });
       });
   });
 

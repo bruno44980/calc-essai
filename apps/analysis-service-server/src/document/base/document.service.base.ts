@@ -15,6 +15,7 @@ import {
   Document as PrismaDocument,
   Analysis as PrismaAnalysis,
 } from "@prisma/client";
+import { Document } from "./Document";
 
 export class DocumentServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -58,5 +59,8 @@ export class DocumentServiceBase {
         where: { id: parentId },
       })
       .analyses(args);
+  }
+  async GetDocumentById(args: string): Promise<Document> {
+    throw new Error("Not implemented");
   }
 }

@@ -224,4 +224,21 @@ export class DocumentControllerBase {
       select: { id: true },
     });
   }
+
+  @common.Get("/documents/:id")
+  @swagger.ApiOkResponse({
+    type: Document,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetDocumentById(
+    @common.Body()
+    body: string
+  ): Promise<Document> {
+    return this.service.GetDocumentById(body);
+  }
 }
