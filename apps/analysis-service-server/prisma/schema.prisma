@@ -1,0 +1,83 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Analysis {
+  analysisType EnumAnalysisAnalysisType?
+  createdAt    DateTime                  @default(now())
+  document     Document?                 @relation(fields: [documentId], references: [id])
+  documentId   String?
+  id           String                    @id @default(cuid())
+  result       String?
+  updatedAt    DateTime                  @updatedAt
+}
+
+model Document {
+  analyses  Analysis[]
+  createdAt DateTime   @default(now())
+  filePath  String?
+  id        String     @id @default(cuid())
+  name      String?
+  updatedAt DateTime   @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model PointOfInterest {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(cuid())
+  latitude    Float?
+  longitude   Float?
+  map         Map?     @relation(fields: [mapId], references: [id])
+  mapId       String?
+  nom         String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Map {
+  createdAt        DateTime          @default(now())
+  dateImportation  DateTime?
+  description      String?
+  fichier          Json?
+  id               String            @id @default(cuid())
+  nom              String?
+  pointOfInterests PointOfInterest[]
+  routes           Route[]
+  updatedAt        DateTime          @updatedAt
+}
+
+model Route {
+  createdAt      DateTime       @default(now())
+  distanceTotale Float?
+  id             String         @id @default(cuid())
+  map            Map?           @relation(fields: [mapId], references: [id])
+  mapId          String?
+  mode           EnumRouteMode?
+  nom            String?
+  pointsOrdonnS  Json?
+  updatedAt      DateTime       @updatedAt
+}
+
+enum EnumAnalysisAnalysisType {
+  Option1
+}
+
+enum EnumRouteMode {
+  Option1
+}
