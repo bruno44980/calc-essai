@@ -17,6 +17,18 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
+import { PointOfInterestList } from "./pointOfInterest/PointOfInterestList";
+import { PointOfInterestCreate } from "./pointOfInterest/PointOfInterestCreate";
+import { PointOfInterestEdit } from "./pointOfInterest/PointOfInterestEdit";
+import { PointOfInterestShow } from "./pointOfInterest/PointOfInterestShow";
+import { MapList } from "./map/MapList";
+import { MapCreate } from "./map/MapCreate";
+import { MapEdit } from "./map/MapEdit";
+import { MapShow } from "./map/MapShow";
+import { RouteList } from "./route/RouteList";
+import { RouteCreate } from "./route/RouteCreate";
+import { RouteEdit } from "./route/RouteEdit";
+import { RouteShow } from "./route/RouteShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -63,6 +75,27 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
+        />
+        <Resource
+          name="PointOfInterest"
+          list={PointOfInterestList}
+          edit={PointOfInterestEdit}
+          create={PointOfInterestCreate}
+          show={PointOfInterestShow}
+        />
+        <Resource
+          name="Map"
+          list={MapList}
+          edit={MapEdit}
+          create={MapCreate}
+          show={MapShow}
+        />
+        <Resource
+          name="Route"
+          list={RouteList}
+          edit={RouteEdit}
+          create={RouteCreate}
+          show={RouteShow}
         />
       </Admin>
     </div>

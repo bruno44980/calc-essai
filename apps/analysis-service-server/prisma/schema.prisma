@@ -38,6 +38,46 @@ model User {
   username  String   @unique
 }
 
+model PointOfInterest {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(cuid())
+  latitude    Float?
+  longitude   Float?
+  map         Map?     @relation(fields: [mapId], references: [id])
+  mapId       String?
+  nom         String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Map {
+  createdAt        DateTime          @default(now())
+  dateImportation  DateTime?
+  description      String?
+  fichier          Json?
+  id               String            @id @default(cuid())
+  nom              String?
+  pointOfInterests PointOfInterest[]
+  routes           Route[]
+  updatedAt        DateTime          @updatedAt
+}
+
+model Route {
+  createdAt      DateTime       @default(now())
+  distanceTotale Float?
+  id             String         @id @default(cuid())
+  map            Map?           @relation(fields: [mapId], references: [id])
+  mapId          String?
+  mode           EnumRouteMode?
+  nom            String?
+  pointsOrdonnS  Json?
+  updatedAt      DateTime       @updatedAt
+}
+
 enum EnumAnalysisAnalysisType {
+  Option1
+}
+
+enum EnumRouteMode {
   Option1
 }
